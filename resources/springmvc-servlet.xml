@@ -39,6 +39,8 @@
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 
+
+	<!-- 引入静态文件 -->
 	<mvc:resources location="/statics/" mapping="/statics/**"></mvc:resources>
 
 	<!-- 全局异常处理 -->
@@ -46,7 +48,7 @@
 		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
 			<props>
-				<prop key="java.lang.RuntimeException">login</prop>
+				<prop key="java.lang.RuntimeException">devlogin</prop>
 			</props>
 		</property>
 	</bean>
@@ -77,7 +79,7 @@
 	<!-- 配置interceptors -->
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/user/sys/**" />
+			<mvc:mapping path="/dev/sys/**" />
 			<bean class="com.smbms.interceptor.SysInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>

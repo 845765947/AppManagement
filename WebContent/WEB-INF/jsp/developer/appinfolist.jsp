@@ -221,7 +221,7 @@
 						<div class="dataTables_info" id="datatable-responsive_info"
 							role="status" aria-live="polite">共${pages.totalCount }条记录
 							${pages.currentPageNo }/${pages.totalPageCount }页</div>
-					</div>
+					</div> 
 					<div class="col-sm-7">
 						<div class="dataTables_paginate paging_simple_numbers"
 							id="datatable-responsive_paginate">

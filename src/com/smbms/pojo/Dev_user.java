@@ -2,24 +2,34 @@ package com.smbms.pojo;
 
 import java.util.Date;
 
-public class User {
+import org.springframework.format.annotation.DateTimeFormat;
 
-	private int id;
-	private String devCode;
-	private String devName;
-	private String devPassword;
-	private String devEmail;
-	private String devInfo;
-	private int createdBy;
-	private Date creationDate;
-	private int modifyBy;
-	private Date modifyDate;
+import com.alibaba.fastjson.annotation.JSONField;
 
-	public int getId() {
+public class Dev_user {
+
+	private long id; // 主键id
+	private String devCode; // 开发者帐号
+	private String devName; // 开发者名称
+	private String devPassword; // 开发者密码
+	private String devEmail; // 开发者电子邮箱
+	private String devInfo; // 开发者简介
+	private long createdBy; // 创建者（来源于backend_user用户表的用户id）
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JSONField(format = "yyyy-MM-dd")
+	private Date creationDate;// 创建时间
+	private long modifyBy;// 更新者（来源于backend_user用户表的用户id）
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JSONField(format = "yyyy-MM-dd")
+	private Date modifyDate;// 最新更新时间
+
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -63,11 +73,11 @@ public class User {
 		this.devInfo = devInfo;
 	}
 
-	public int getCreatedBy() {
+	public long getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(long createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -79,11 +89,11 @@ public class User {
 		this.creationDate = creationDate;
 	}
 
-	public int getModifyBy() {
+	public long getModifyBy() {
 		return modifyBy;
 	}
 
-	public void setModifyBy(int modifyBy) {
+	public void setModifyBy(long modifyBy) {
 		this.modifyBy = modifyBy;
 	}
 
