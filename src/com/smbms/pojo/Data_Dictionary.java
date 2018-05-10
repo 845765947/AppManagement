@@ -2,7 +2,7 @@ package com.smbms.pojo;
 
 import java.util.Date;
 
-public class Dictionary {
+public class Data_Dictionary {
 	private int id; // 主键ID
 	private String typeCode; // 类型编码
 	private String typeName; // 类型名称

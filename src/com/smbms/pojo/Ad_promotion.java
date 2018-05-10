@@ -6,7 +6,7 @@ public class Ad_promotion {
 	private long id; // 主键id
 	private long appId; // appId（来源于：app_info表的主键id）
 	private String adPicPath; // 广告图片存储路径
-	private long adPV; // 广告点击量
+	private long adPV; // 广告点击量 
 	private int carouselPosition; // 轮播位（1-n）
 	private Date startTime; // 起效时间
 	private Date endTime; // 失效时间

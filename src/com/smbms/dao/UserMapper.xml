@@ -1,8 +1,91 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smbms.dao.UserMapper">
-	<select id="seleteUserName" parameterType="string" resultType="User">
+	<select id="seleteUserName" parameterType="string" resultType="Dev_user">
 		select * FROM dev_user where devCode=#{devCode}
 	</select>
+
+	<select id="selectAppinfo" resultType="App_info">
+		SELECT
+		a.*,
+
+		(SELECT valueName
+		FROM
+		data_dictionary d WHERE
+		a.`flatformId`=d.valueId
+		and
+		d.typeCode='APP_FLATFORM') as
+		flatformName,
+
+		(SELECT categoryName FROM
+		app_category c WHERE
+		c.id=a.categoryLevel1 )
+		as
+		categoryLevel1Name,
+
+		(SELECT
+		categoryName FROM
+		app_category c WHERE
+		c.id=a.categoryLevel2 )
+		as
+		categoryLevel2Name,
+
+		(SELECT categoryName FROM
+		app_category c WHERE
+		c.id=a.categoryLevel3 )
+		as
+		categoryLevel3Name,
+
+		(SELECT valueName FROM data_dictionary d WHERE
+		a.`status`=d.valueId and
+		d.typeCode='APP_STATUS') as
+		statusName,
+
+		(SELECT
+		v.versionNo FROM
+		app_version v WHERE a.versionId=v.id ) as
+		versionNo
+
+		FROM
+		app_info a
+		where
+		a.devId=#{id}
+		<if test="querySoftwareName!=''and querySoftwareName!=null">and a.softwareName LIKE
+			CONCAT('%',#{querySoftwareName}
+			,'%')</if>
+		<if test="queryStatus!='' and queryStatus!=null">
+			AND a.`status`=#{queryStatus}
+		</if>
+		<if test="queryFlatformId!='' and queryFlatformId!=null">
+			AND a.flatformId=#{queryFlatformId}
+		</if>
+
+		<if test="queryCategoryLevel1!='' and queryCategoryLevel1!=null">
+			AND a.categoryLevel1=#{queryCategoryLevel1}
+		</if>
+		<if test="queryCategoryLevel2!=''and queryCategoryLevel2!=null">
+			AND a.categoryLevel2=#{queryCategoryLevel2}
+		</if>
+		<if test="queryCategoryLevel3!=''and queryCategoryLevel3!=null">
+			AND a.categoryLevel3=#{queryCategoryLevel3}
+		</if>
+		LIMIT #{currentPageNo},#{pageSize}
+	</select>
+
+	<select id="coucatAppinfo" resultType="int">
+		SELECT count(1) FROM
+		`app_info`
+		<trim prefix="where" prefixOverrides="and||or">
+			<if test="querySoftwareName!='' and querySoftwareName!=null">and softwareName like
+				CONCAT('%',#{querySoftwareName},'%')</if>
+			<if test="queryStatus!='' and queryStatus!=null"> and `status` =#{queryStatus}</if>
+			<if test="queryFlatformId!='' and queryFlatformId!=null"> and `flatformId` =#{queryFlatformId}</if>
+		</trim>
+	</select>
+
+	<select id="selectGrading" parameterType="String" resultType="Data_Dictionary">
+		SELECT * from data_dictionary WHERE typeCode =#{typeCode}
+	</select>
+
 </mapper>   
         

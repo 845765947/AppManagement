@@ -133,7 +133,7 @@
 							<li role="presentation" class="dropdown">
 
 								<ul id="menu1" class="dropdown-menu list-unstyled msg_list"
-									role="menu">
+									role="menu"> 
 									<li><a> <span class="image"><img
 												src="${pageContext.request.contextPath }/statics/images/img.jpg"
 												alt="Profile Image" />

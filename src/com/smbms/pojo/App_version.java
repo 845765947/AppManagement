@@ -17,7 +17,7 @@ public class App_version {
 	private Date apkLocPath; // apk文件的服务器存储路径
 	private String apkFileName; // 上传的apk文件名称
 
-	public long getId() {
+	public long getId() {	
 		return id;
 	}
 
