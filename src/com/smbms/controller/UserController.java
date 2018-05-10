@@ -24,7 +24,7 @@ import com.smbms.tools.PageSupport;
 @RequestMapping("/dev")
 public class UserController {
 	Logger logger = Logger.getLogger(this.getClass());
-	
+
 	@Resource
 	private UserService userservice;
 
@@ -33,10 +33,8 @@ public class UserController {
 	public String loginView() {
 		return "devlogin";
 	}
-	//456
-	public String show(){
-		return null;
-	}
+
+
 	// 登录方法
 	@RequestMapping("/dologin")
 	public String login(@RequestParam("devCode") String devCode,
@@ -118,7 +116,7 @@ public class UserController {
 		model.addAttribute("queryCategoryLevel1", queryCategoryLevel1);
 		model.addAttribute("queryCategoryLevel2", queryCategoryLevel3);
 		model.addAttribute("queryCategoryLevel2", queryCategoryLevel3);
-		
+
 		logger.info("获取各种下拉框集合===============================");
 		// 设置状态集合
 		List<Data_Dictionary> statusList = new ArrayList<Data_Dictionary>();
