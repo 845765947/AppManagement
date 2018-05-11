@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.smbms.pojo.App_category;
 import com.smbms.pojo.App_info;
 import com.smbms.pojo.Data_Dictionary;
 import com.smbms.pojo.Dev_user;
+import com.smbms.service.CategoryService;
 import com.smbms.service.UserService;
 import com.smbms.tools.Constants;
 import com.smbms.tools.PageSupport;
@@ -28,12 +30,14 @@ public class UserController {
 	@Resource
 	private UserService userservice;
 
+	@Resource
+	private CategoryService categoryService;
+
 	// 登入页面跳转
 	@RequestMapping("/loginView")
 	public String loginView() {
 		return "devlogin";
 	}
-
 
 	// 登录方法
 	@RequestMapping("/dologin")
@@ -129,7 +133,11 @@ public class UserController {
 		// 添加到Model中
 		model.addAttribute("statusList", statusList);
 		model.addAttribute("flatFormList", flatFormList);
-
+		// 三级分类中的一级分类
+		List<App_category> categoryLevel1List = new ArrayList<App_category>();
+		//获得一级分类
+		categoryLevel1List = categoryService.selectOtpions(null,null);
+		model.addAttribute("categoryLevel1List",categoryLevel1List);
 		return "/developer/appinfolist";
 	}
 }
