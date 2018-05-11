@@ -1,21 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smbms.dao.AppinfoMapper">
-	<select id="selectInfoApkName" resultType="App_info"
+	<select id="selectInfoCondition" resultType="App_info"
 		parameterType="string">
-		SELECT * FROM `app_info` where APKName=#{apkName}
+		SELECT a.* ,(SELECT valueName from data_dictionary WHERE
+		a.`status`=valueId and typeCode="APP_STATUS") as statusName
+		FROM
+		`app_info` a
+		<trim prefix="where" prefixOverrides="and||or">
+			<if test="apkName !='' and apkName!=null"> and a.APKName=#{apkName}</if>
+			<if test="appinfoid !='' and appinfoid!=null">and a.id=#{appinfoid}</if>
+		</trim>
+
 	</select>
 	<insert id="insertInfo" parameterType="App_info">
 		INSERT INTO app_info
 		(softwareName,APKName,supportROM,interfaceLanguage,
 		softwareSize,updateDate,devId,appInfo,status,onSaleDate,offSaleDate,
-		flatformId,downloads,createdBy,creationDate,modifyBy,modifyDate,
+		flatformId,downloads,createdBy,creationDate,
 		categoryLevel1,categoryLevel2,categoryLevel3,logoPicPath,logoLocPath,versionId)
 
 		values(#{softwareName},#{APKName},#{supportROM},#{interfaceLanguage},
 		#{softwareSize},#{updateDate},#{devId},#{appInfo},#{status},#{onSaleDate},#{offSaleDate},
-		#{flatformId},#{downloads},#{createdBy},#{creationDate},#{modifyBy},#{modifyDate},
+		#{flatformId},#{downloads},#{createdBy},#{creationDate},
 		#{categoryLevel1},#{categoryLevel2},#{categoryLevel3},#{logoPicPath},#{logoLocPath},#{versionId})
 	</insert>
+
+
+	<update id="updateAppinfo" parameterType="App_info">
+		update app_info SET
+		softwareName=#{softwareName},APKName=#{APKName},supportROM=#{supportROM},interfaceLanguage=#{interfaceLanguage},softwareSize=#{softwareSize},updateDate=#{updateDate},
+		devId=#{devId},appInfo=#{appInfo},status=#{status},onSaleDate=#{onSaleDate},offSaleDate=#{offSaleDate},flatformId=#{flatformId},downloads=#{downloads},createdBy=#{createdBy},creationDate=#{creationDate},
+		modifyBy=#{modifyBy},modifyDate=#{modifyDate},categoryLevel1=#{categoryLevel1},categoryLevel2=#{categoryLevel2},categoryLevel3=#{categoryLevel3},logoPicPath=#{logoPicPath},logoLocPath=#{logoLocPath},versionId=#{versionId}
+		where id=#{id}
+	</update>
+
 </mapper>   
         

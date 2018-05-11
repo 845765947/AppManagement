@@ -19,7 +19,7 @@ import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 @Aspect
 public class EnhancedLogger {
 	private static final Logger logger = Logger.getLogger(EnhancedLogger.class);
-
+ 
 	@Around("execution(* com.smbms.service.*.*(..))")
 	public Object aroundLogger(ProceedingJoinPoint pjp) throws Throwable {
 		logger.info("调用" + pjp.getTarget() + "的" + pjp.getSignature().getName()

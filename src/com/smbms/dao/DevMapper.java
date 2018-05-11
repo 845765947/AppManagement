@@ -45,4 +45,5 @@ public interface DevMapper {
 	 */
 	public List<Data_Dictionary> selectGrading(
 			@Param("typeCode") String typeCode);
+
 }

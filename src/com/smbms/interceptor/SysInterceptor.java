@@ -23,9 +23,9 @@ public class SysInterceptor extends HandlerInterceptorAdapter {
 		Dev_user user = (Dev_user) session.getAttribute(Constants.USER_SESSION);
 
 		if (null == user) {
-			response.sendRedirect(request.getContextPath() + "/WEB-INF/403.jsp");
+			response.sendRedirect(request.getContextPath() + "/403.jsp");
 			return false;
-		}
+		} 
 		return true;
 	}
 }

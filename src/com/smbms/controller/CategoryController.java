@@ -21,6 +21,7 @@ public class CategoryController {
 	@Resource
 	private CategoryService service;
 
+	// 加载三级分类
 	@RequestMapping("/categorylevellist")
 	@ResponseBody
 	public List<App_category> categorylevellist(

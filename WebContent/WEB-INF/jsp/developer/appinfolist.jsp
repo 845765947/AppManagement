@@ -281,7 +281,7 @@
 											href="javascript:page_nav(document.forms[0],${pages.totalPageCount });"
 											aria-controls="datatable-responsive" data-dt-idx="7"
 											tabindex="0">最后一页</a></li>
-									</c:if> 
+									</c:if>
 								</ul>
 							</div>
 						</div>

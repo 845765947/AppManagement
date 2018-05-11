@@ -47,7 +47,7 @@
 		versionNo
 
 		FROM
-		app_info a
+		app_info as a
 		where
 		a.devId=#{id}
 		<if test="querySoftwareName!=''and querySoftwareName!=null">and a.softwareName LIKE
@@ -74,7 +74,7 @@
 	</select>
 
 	<select id="coucatAppinfo" resultType="int">
-		SELECT count(1) FROM `app_info`
+		SELECT count(1) FROM `app_info` as a
 		<trim prefix="where" prefixOverrides="and||or">
 			<if test="querySoftwareName!='' and querySoftwareName!=null">and softwareName like
 				CONCAT('%',#{querySoftwareName},'%')</if>
