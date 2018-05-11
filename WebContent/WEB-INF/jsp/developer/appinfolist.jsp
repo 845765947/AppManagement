@@ -132,7 +132,7 @@
 					<div class="row">
 						<div class="col-sm-12">
 							<a
-								href="${pageContext.request.contextPath}/dev/flatform/app/appinfoadd"
+								href="${pageContext.request.contextPath}/dev/sys/appinfoAddView"
 								class="btn btn-success btn-sm">新增APP基础信息</a>
 							<table id="datatable-responsive"
 								class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline collapsed"
@@ -281,7 +281,7 @@
 											href="javascript:page_nav(document.forms[0],${pages.totalPageCount });"
 											aria-controls="datatable-responsive" data-dt-idx="7"
 											tabindex="0">最后一页</a></li>
-									</c:if>
+									</c:if> 
 								</ul>
 							</div>
 						</div>

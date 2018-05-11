@@ -2,6 +2,7 @@
 var pathName = window.document.location.pathname;
 // 截取，得到项目名称
 var path = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+
 $("#queryCategoryLevel1").change(
 		function() {
 			var queryCategoryLevel1 = $("#queryCategoryLevel1").val();
@@ -113,7 +114,7 @@ $(document).on("click", ".saleSwichOpen,.saleSwichClose", function() {
 		if (confirm("你确定要下架您的APP应用【" + obj.attr("appsoftwarename") + "】吗？")) {
 			saleSwitchAjax(appinfoid, obj);
 		}
-	}
+	} 
 });
 
 var saleSwitchAjax = function(appId, obj) {

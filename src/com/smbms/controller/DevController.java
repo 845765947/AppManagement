@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,18 +18,19 @@ import com.smbms.pojo.App_category;
 import com.smbms.pojo.App_info;
 import com.smbms.pojo.Data_Dictionary;
 import com.smbms.pojo.Dev_user;
+import com.smbms.service.AppinfoService;
 import com.smbms.service.CategoryService;
-import com.smbms.service.UserService;
+import com.smbms.service.DevService;
 import com.smbms.tools.Constants;
 import com.smbms.tools.PageSupport;
 
 @Controller
 @RequestMapping("/dev")
-public class UserController {
+public class DevController {
 	Logger logger = Logger.getLogger(this.getClass());
 
 	@Resource
-	private UserService userservice;
+	private DevService devService;
 
 	@Resource
 	private CategoryService categoryService;
@@ -45,7 +47,7 @@ public class UserController {
 			@RequestParam("devPassword") String pwd, HttpSession session) {
 		logger.info("进入登录方法===============================");
 		Dev_user user = new Dev_user();
-		user = userservice.seleteUserName(devCode, pwd);
+		user = devService.seleteUserName(devCode, pwd);
 		if (user.getDevName() != null) {
 			session.setAttribute(Constants.USER_SESSION, user);
 			session.setAttribute("devUserSession", user);
@@ -88,8 +90,9 @@ public class UserController {
 		// 设置页面显示大小
 		page.setPageSize(pageSize);
 		// 设置总数
-		page.setTotalCount(userservice.coucatAppinfo(querySoftwareName,
-				queryStatus, queryFlatformId));
+		page.setTotalCount(devService.coucatAppinfo(querySoftwareName,
+				queryStatus, queryFlatformId, queryCategoryLevel1,
+				queryCategoryLevel2, queryCategoryLevel3));
 		// 设置当前页面
 
 		if (currentPageNo != null && currentPageNo > 0) {
@@ -105,7 +108,7 @@ public class UserController {
 
 		long id = ((Dev_user) session.getAttribute(Constants.USER_SESSION))
 				.getId();
-		list = userservice.selectAppinfo(querySoftwareName, queryStatus,
+		list = devService.selectAppinfo(querySoftwareName, queryStatus,
 				queryFlatformId, queryCategoryLevel1, queryCategoryLevel2,
 				queryCategoryLevel3, (currentPageNo - 1) * pageSize, pageSize,
 				id);
@@ -127,17 +130,24 @@ public class UserController {
 		// 设置所属平台集合
 		List<Data_Dictionary> flatFormList = new ArrayList<Data_Dictionary>();
 		// 获取状态集合
-		statusList = userservice.selectGrading(Constants.APP_STATUS);
+		statusList = devService.selectGrading(Constants.APP_STATUS);
 		// 获取所属平台集合
-		flatFormList = userservice.selectGrading(Constants.APP_FLATFORM);
+		flatFormList = devService.selectGrading(Constants.APP_FLATFORM);
 		// 添加到Model中
 		model.addAttribute("statusList", statusList);
 		model.addAttribute("flatFormList", flatFormList);
 		// 三级分类中的一级分类
 		List<App_category> categoryLevel1List = new ArrayList<App_category>();
-		//获得一级分类
-		categoryLevel1List = categoryService.selectOtpions(null,null);
-		model.addAttribute("categoryLevel1List",categoryLevel1List);
+		// 获得一级分类
+		categoryLevel1List = categoryService.selectOtpions(null, null);
+		model.addAttribute("categoryLevel1List", categoryLevel1List);
 		return "/developer/appinfolist";
 	}
+
+	// 添加APP信息页面跳转,带拦截器
+	@RequestMapping("/sys/appinfoAddView")
+	public String appinfoAddView(Model model) {
+		return "/developer/appinfoadd";
+	}
+
 }

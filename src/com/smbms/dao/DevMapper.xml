@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.smbms.dao.UserMapper">
+<mapper namespace="com.smbms.dao.DevMapper">
 	<select id="seleteUserName" parameterType="string" resultType="Dev_user">
 		select * FROM dev_user where devCode=#{devCode}
 	</select>
@@ -69,17 +69,28 @@
 		<if test="queryCategoryLevel3!=''and queryCategoryLevel3!=null">
 			AND a.categoryLevel3=#{queryCategoryLevel3}
 		</if>
+
 		LIMIT #{currentPageNo},#{pageSize}
 	</select>
 
 	<select id="coucatAppinfo" resultType="int">
-		SELECT count(1) FROM
-		`app_info`
+		SELECT count(1) FROM `app_info`
 		<trim prefix="where" prefixOverrides="and||or">
 			<if test="querySoftwareName!='' and querySoftwareName!=null">and softwareName like
 				CONCAT('%',#{querySoftwareName},'%')</if>
 			<if test="queryStatus!='' and queryStatus!=null"> and `status` =#{queryStatus}</if>
 			<if test="queryFlatformId!='' and queryFlatformId!=null"> and `flatformId` =#{queryFlatformId}</if>
+
+			<if test="queryCategoryLevel1!='' and queryCategoryLevel1!=null">
+				AND a.categoryLevel1=#{queryCategoryLevel1}
+			</if>
+			<if test="queryCategoryLevel2!=''and queryCategoryLevel2!=null">
+				AND a.categoryLevel2=#{queryCategoryLevel2}
+			</if>
+			<if test="queryCategoryLevel3!=''and queryCategoryLevel3!=null">
+				AND a.categoryLevel3=#{queryCategoryLevel3}
+			</if>
+
 		</trim>
 	</select>
 

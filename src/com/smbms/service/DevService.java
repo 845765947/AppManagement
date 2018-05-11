@@ -8,7 +8,7 @@ import com.smbms.pojo.App_info;
 import com.smbms.pojo.Data_Dictionary;
 import com.smbms.pojo.Dev_user;
 
-public interface UserService {
+public interface DevService {
 	/**
 	 * 根据用户名查找User
 	 */
@@ -27,7 +27,8 @@ public interface UserService {
 	 * 获取app信息总数
 	 */
 	public int coucatAppinfo(String querySoftwareName, String queryStatus,
-			String queryFlatformId);
+			String queryFlatformId, String queryCategoryLevel1,
+			String queryCategoryLevel2, String queryCategoryLevel3);
 
 	/**
 	 * 根据pid获取分级列表

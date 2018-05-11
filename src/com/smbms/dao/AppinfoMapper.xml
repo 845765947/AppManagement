@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smbms.dao.AppinfoMapper">
+	<select id="selectInfoApkName" resultType="App_info"
+		parameterType="string">
+		SELECT * FROM `app_info` where APKName=#{apkName}
+	</select>
+	<insert id="insertInfo" parameterType="App_info">
+		INSERT INTO app_info
+		(softwareName,APKName,supportROM,interfaceLanguage,
+		softwareSize,updateDate,devId,appInfo,status,onSaleDate,offSaleDate,
+		flatformId,downloads,createdBy,creationDate,modifyBy,modifyDate,
+		categoryLevel1,categoryLevel2,categoryLevel3,logoPicPath,logoLocPath,versionId)
+
+		values(#{softwareName},#{APKName},#{supportROM},#{interfaceLanguage},
+		#{softwareSize},#{updateDate},#{devId},#{appInfo},#{status},#{onSaleDate},#{offSaleDate},
+		#{flatformId},#{downloads},#{createdBy},#{creationDate},#{modifyBy},#{modifyDate},
+		#{categoryLevel1},#{categoryLevel2},#{categoryLevel3},#{logoPicPath},#{logoLocPath},#{versionId})
+	</insert>
+</mapper>   
+        

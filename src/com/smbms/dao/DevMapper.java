@@ -10,7 +10,7 @@ import com.smbms.pojo.App_info;
 import com.smbms.pojo.Data_Dictionary;
 import com.smbms.pojo.Dev_user;
 
-public interface UserMapper {
+public interface DevMapper {
 	/**
 	 * 根据用户名查找User
 	 */
@@ -35,10 +35,13 @@ public interface UserMapper {
 	public int coucatAppinfo(
 			@Param("querySoftwareName") String querySoftwareName,
 			@Param("queryStatus") String queryStatus,
-			@Param("queryFlatformId") String queryFlatformId);
+			@Param("queryFlatformId") String queryFlatformId,
+			@Param("queryCategoryLevel1") String queryCategoryLevel1,
+			@Param("queryCategoryLevel2") String queryCategoryLevel2,
+			@Param("queryCategoryLevel3") String queryCategoryLevel3);
 
 	/**
-	 * 根据pid获取分级列表
+	 * 根据typeCode获取分级列表
 	 */
 	public List<Data_Dictionary> selectGrading(
 			@Param("typeCode") String typeCode);

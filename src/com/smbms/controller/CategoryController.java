@@ -33,4 +33,3 @@ public class CategoryController {
 		return categoryLevel1List;
 	}
 }
-	
