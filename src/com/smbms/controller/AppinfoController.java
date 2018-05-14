@@ -1,8 +1,10 @@
 package com.smbms.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -23,7 +25,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.mysql.jdbc.StringUtils;
 import com.smbms.pojo.App_info;
+import com.smbms.pojo.App_version;
 import com.smbms.pojo.Dev_user;
+import com.smbms.service.AppVersionService;
 import com.smbms.service.AppinfoService;
 import com.smbms.tools.Constants;
 
@@ -34,6 +38,9 @@ public class AppinfoController {
 
 	@Resource
 	private AppinfoService infoService;
+
+	@Resource
+	private AppVersionService vsService;
 
 	@RequestMapping("/apkexist")
 	@ResponseBody
@@ -76,12 +83,12 @@ public class AppinfoController {
 			String perfix = FilenameUtils.getExtension(oldFileName);// 原文件后缀
 			logger.debug("uploadFile prefix==========================?>"
 					+ perfix);
-			int filesize = 5000000;
+			int filesize = 500000;
 			logger.debug("uploadFIle size=================================>"
 					+ multipartFile.getSize());
 			if (multipartFile.getSize() > filesize) {
 				request.setAttribute("fileUploadError", "上传的文件大小不能超过500KB");
-				return "/appinfoadd";
+				return "forward:/appinfo/appinfoaddsave";
 			} else if (perfix.equalsIgnoreCase("jpg")
 					|| perfix.equalsIgnoreCase("png")
 					|| perfix.equalsIgnoreCase("jpeg")
@@ -101,11 +108,11 @@ public class AppinfoController {
 				} catch (Exception e) {
 					e.printStackTrace();
 					request.setAttribute("fileUploadError", "*上传失败!");
-					return "/developer/appinfoadd";
+					return "forward:/appinfo/appinfoaddsave";
 				}
 			} else {
 				request.setAttribute("fileUploadError", "*上传图片格式不正确!");
-				return "/developer/appinfoadd";
+				return "forward:/appinfo/appinfoaddsave";
 			}
 
 			// LOGO图片url路径
@@ -128,7 +135,7 @@ public class AppinfoController {
 			// 文件上传结束，开始新增
 			boolean fig = infoService.insertInfo(info);
 		}
-		return "redirect:/dev/flatform/app/list";
+		return "redirect:/dev/sys/flatform/app/list";
 	}
 
 	/**
@@ -138,8 +145,6 @@ public class AppinfoController {
 	public String appinfomodifyView(@PathVariable String appinfoid, Model model) {
 		App_info info = new App_info();
 		info = infoService.selectInfoCondition(null, appinfoid);
-		System.out.println(info.getCategoryLevel2() + "\t"
-				+ info.getCategoryLevel3());
 		model.addAttribute("appInfo", info);
 		return "/developer/appinfomodify";
 	}
@@ -199,7 +204,7 @@ public class AppinfoController {
 					+ multipartFile.getSize());
 			if (multipartFile.getSize() > filesize) {
 				request.setAttribute("fileUploadError", "上传的文件大小不能超过500KB");
-				return "/appinfoadd";
+				return "forward:/appinfo/appversionmodify/" + info.getId();
 			} else if (perfix.equalsIgnoreCase("jpg")
 					|| perfix.equalsIgnoreCase("png")
 					|| perfix.equalsIgnoreCase("jpeg")
@@ -219,16 +224,14 @@ public class AppinfoController {
 				} catch (Exception e) {
 					e.printStackTrace();
 					request.setAttribute("fileUploadError", "*上传失败!");
-					return "/developer/appinfomodify";
+					return "forward:/appinfo/appversionmodify/" + info.getId();
 				}
 			} else {
 				request.setAttribute("fileUploadError", "*上传图片格式不正确!");
-				return "/developer/appinfomodify";
+				return "forward:/appinfo/appversionmodify/" + info.getId();
 			}
-		} else {
-			request.setAttribute("fileUploadError", "*上传图片格式不正确!");
-			return "/developer/appinfomodify";
 		}
+
 		// LOGO图片url路径
 		logoPicPath = fileName;
 		// LOGO图片的服务器存储路径
@@ -244,6 +247,61 @@ public class AppinfoController {
 		info.setModifyDate(new Date());
 		// 更新操作
 		boolean fig = infoService.updateAppinfo(info);
-		return "redirect:/dev/flatform/app/list";
+		return "redirect:/dev/sys/flatform/app/list";
+	}
+
+	/**
+	 * 删除App基础信息，以及该app的所有历史版本
+	 */
+	@RequestMapping("/delapp")
+	@ResponseBody
+	public Object delapp(@RequestParam("id") String id) {
+		Map<String, String> map = new HashMap<String, String>();
+		boolean figVersion = vsService.deleteAppVersion(id);
+		if (figVersion) {
+			// 获取所有的版本信息，并且删除apk缓存文件
+			List<App_version> versionList = new ArrayList<App_version>();
+			versionList = vsService.selectInfoList(id);
+			for (int a = 0; a < versionList.size(); a++) {
+				File file = new File(versionList.get(a).getApkLocPath());
+				file.delete();
+			}
+			boolean figInfo = infoService.deleteAppinfo(id);
+			if (figInfo) {
+				map.put("delResult", "true");
+			} else {
+				map.put("delResult", "false");
+			}
+		} else {
+			map.put("delResult", "false");
+		}
+		return map;
+	}
+
+	/**
+	 * 上架和下架
+	 */
+	@RequestMapping("/sale")
+	@ResponseBody
+	public Object sale(@RequestParam("appId") String appId,
+			@RequestParam("appstatus") String appstatus) {
+		Map<String, String> map = new HashMap<String, String>();
+		// 默认为没有异常
+		map.put("errorCode", "0");
+		try {
+			boolean fig = infoService.sale(appId, appstatus);
+			if (fig) {
+				map.put("resultMsg", "success");
+				if (appstatus.equals(4)) {
+					map.put("saleSwitch", "open");
+				} else if (appstatus.equals(5)) {
+					map.put("saleSwitch", "close");
+				}
+			}
+		} catch (Exception e) {
+			map.put("errorCode", "1");
+			e.printStackTrace();
+		}
+		return map;
 	}
 }

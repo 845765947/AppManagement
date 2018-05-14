@@ -3,7 +3,7 @@ package com.smbms.pojo;
 import java.util.Date;
 
 public class App_category {
-	private long id; // 主键ID
+	private Long id; // 主键ID
 	private String categoryCode; // 分类编码
 	private String categoryName; // 分类名称
 	private long parentId; // 父级节点id
@@ -11,7 +11,7 @@ public class App_category {
 	private Date creationTime; // 创建时间
 	private long modifyBy; // 更新者（来源于backend_user用户表的用户id）
 	private Date modifyDate; // 最新更新时间
- 
+
 	public long getId() {
 		return id;
 	}

@@ -41,7 +41,7 @@
 				class="btn btn-link">后台管理系统 入口</a>
 		</div>
 		<div>
-			<a href="${pageContext.request.contextPath }/dev/loginView"
+			<a href="${pageContext.request.contextPath }/login/loginView"
 				class="btn btn-link">开发者平台 入口</a>
 		</div>
 	</div>

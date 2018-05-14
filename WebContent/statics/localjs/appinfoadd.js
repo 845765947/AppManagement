@@ -124,7 +124,7 @@ $(function() {
 					});
 
 	$("#back").on("click", function() {
-		window.location.href = "list";
+		window.location.href = path+"/dev/flatform/app/list";
 	});
 
 	$("#APKName").bind("blur", function() {

@@ -12,6 +12,15 @@ public class Backend_user {
 	private long modifyBy; // 更新者（来源于backend_user用户表的用户id）
 	private Date modifyDate; // 最新更新时间
 	private String userPassword; // 用户密码
+	private String userTypeName;// 用户角色类型名称
+
+	public String getUserTypeName() {
+		return userTypeName;
+	}
+
+	public void setUserTypeName(String userTypeName) {
+		this.userTypeName = userTypeName;
+	}
 
 	public long getId() {
 		return id;

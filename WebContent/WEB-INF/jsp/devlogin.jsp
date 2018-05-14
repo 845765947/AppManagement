@@ -41,7 +41,7 @@
 		<div class="login_wrapper">
 			<div class="animate form login_form">
 				<section class="login_content">
-					<form action="${pageContext.request.contextPath }/dev/dologin"
+					<form action="${pageContext.request.contextPath }/login/dologin"
 						method="post">
 						<h1>APP开发者平台</h1>
 						<div>

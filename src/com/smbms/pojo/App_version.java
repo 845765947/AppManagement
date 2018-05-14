@@ -13,11 +13,39 @@ public class App_version {
 	private long createdBy; // 创建者（来源于dev_user开发者信息表的用户id）
 	private Date creationDate; // 创建时间
 	private long modifyBy; // 更新者（来源于dev_user开发者信息表的用户id）
-	private String modifyDate; // 最新更新时间
-	private Date apkLocPath; // apk文件的服务器存储路径
+	private Date modifyDate; // 最新更新时间
+	private String apkLocPath; // apk文件的服务器存储路径
 	private String apkFileName; // 上传的apk文件名称
 
-	public long getId() {	
+	private String softwareName; // 软件名称
+	private String publishStatusName;// 状态名称
+	private String APKName; // APK名称（唯一）
+
+	public String getSoftwareName() {
+		return softwareName;
+	}
+
+	public void setSoftwareName(String softwareName) {
+		this.softwareName = softwareName;
+	}
+
+	public String getAPKName() {
+		return APKName;
+	}
+
+	public void setAPKName(String aPKName) {
+		APKName = aPKName;
+	}
+
+	public String getPublishStatusName() {
+		return publishStatusName;
+	}
+
+	public void setPublishStatusName(String publishStatusName) {
+		this.publishStatusName = publishStatusName;
+	}
+
+	public long getId() {
 		return id;
 	}
 
@@ -97,19 +125,19 @@ public class App_version {
 		this.modifyBy = modifyBy;
 	}
 
-	public String getModifyDate() {
+	public Date getModifyDate() {
 		return modifyDate;
 	}
 
-	public void setModifyDate(String modifyDate) {
+	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
 	}
 
-	public Date getApkLocPath() {
+	public String getApkLocPath() {
 		return apkLocPath;
 	}
 
-	public void setApkLocPath(Date apkLocPath) {
+	public void setApkLocPath(String apkLocPath) {
 		this.apkLocPath = apkLocPath;
 	}
 

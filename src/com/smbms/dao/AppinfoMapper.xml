@@ -4,7 +4,35 @@
 	<select id="selectInfoCondition" resultType="App_info"
 		parameterType="string">
 		SELECT a.* ,(SELECT valueName from data_dictionary WHERE
-		a.`status`=valueId and typeCode="APP_STATUS") as statusName
+		a.`status`=valueId and typeCode="APP_STATUS") as statusName,
+		(select
+		d.devName FROM dev_user d WHERE a.devId=d.id) as devName ,
+
+		(SELECT
+		categoryName FROM
+		app_category c WHERE
+		c.id=a.categoryLevel1 )
+		as
+		categoryLevel1Name,
+
+		(SELECT
+		categoryName FROM
+		app_category c WHERE
+		c.id=a.categoryLevel2 )
+		as
+		categoryLevel2Name,
+
+		(SELECT categoryName FROM
+		app_category c WHERE
+		c.id=a.categoryLevel3 )
+		as
+		categoryLevel3Name,(SELECT valueName FROM
+		data_dictionary d WHERE
+		a.`flatformId`=d.valueId
+		and
+		d.typeCode='APP_FLATFORM') as
+		flatformName
+
 		FROM
 		`app_info` a
 		<trim prefix="where" prefixOverrides="and||or">
@@ -34,6 +62,22 @@
 		modifyBy=#{modifyBy},modifyDate=#{modifyDate},categoryLevel1=#{categoryLevel1},categoryLevel2=#{categoryLevel2},categoryLevel3=#{categoryLevel3},logoPicPath=#{logoPicPath},logoLocPath=#{logoLocPath},versionId=#{versionId}
 		where id=#{id}
 	</update>
+
+	<update id="updateAppVersion" parameterType="string">
+		UPDATE app_info SET
+		versionId=#{versionId} WHERE id=#{id}
+	</update>
+
+	<delete id="deleteAppinfo" parameterType="string">
+		delete FROM app_info
+		WHERE id=#{id}
+	</delete>
+
+	<update id="sale" parameterType="string">
+		UPDATE app_info SET `status`=
+		#{appstatus} WHERE id=#{appId}
+	</update>
+
 
 </mapper>   
         

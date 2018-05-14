@@ -25,7 +25,7 @@ public class SysInterceptor extends HandlerInterceptorAdapter {
 		if (null == user) {
 			response.sendRedirect(request.getContextPath() + "/403.jsp");
 			return false;
-		} 
+		}
 		return true;
 	}
 }

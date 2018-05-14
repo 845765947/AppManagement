@@ -37,6 +37,15 @@ public class App_info {
 	private String categoryLevel1Name;// 所属一级名称（来源于：data_dictionary）
 	private String categoryLevel2Name;// 所属二级名称（来源于：data_dictionary）
 	private String categoryLevel3Name;// 所属三级名称（来源于：data_dictionary）
+	private String devName;// 开发者名称
+
+	public String getDevName() {
+		return devName;
+	}
+
+	public void setDevName(String devName) {
+		this.devName = devName;
+	}
 
 	public String getVersionNo() {
 		return versionNo;

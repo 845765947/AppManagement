@@ -6,9 +6,7 @@
 	</select>
 
 	<select id="selectAppinfo" resultType="App_info">
-		SELECT
-		a.*,
-
+		SELECT a.* ,
 		(SELECT valueName
 		FROM
 		data_dictionary d WHERE
@@ -36,7 +34,8 @@
 		as
 		categoryLevel3Name,
 
-		(SELECT valueName FROM data_dictionary d WHERE
+		(SELECT valueName FROM
+		data_dictionary d WHERE
 		a.`status`=d.valueId and
 		d.typeCode='APP_STATUS') as
 		statusName,
@@ -46,10 +45,18 @@
 		app_version v WHERE a.versionId=v.id ) as
 		versionNo
 
+		,(SELECT valueName FROM
+		data_dictionary d WHERE
+		a.`flatformId`=d.valueId
+		and
+		d.typeCode='APP_FLATFORM') as
+		flatformName
+
 		FROM
-		app_info as a
+		`app_info` a
 		where
-		a.devId=#{id}
+		1=1
+		<if test="id!=0">and a.devId=#{id}</if>
 		<if test="querySoftwareName!=''and querySoftwareName!=null">and a.softwareName LIKE
 			CONCAT('%',#{querySoftwareName}
 			,'%')</if>

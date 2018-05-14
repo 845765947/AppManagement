@@ -154,7 +154,7 @@
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<input type="file" class="form-control col-md-7 col-xs-12"
 								name="a_logoPicPath" required="required" id="a_logoPicPath" />
-							${fileUploadError }
+							<font color="red">${fileUploadError }</font>
 						</div>
 					</div>
 					<div class="ln_solid"></div>

@@ -16,13 +16,14 @@
 				<form class="form-horizontal form-label-left"
 					action="${pageContext.request.contextPath }/appinfo/appinfomodifysave"
 					method="post" enctype="multipart/form-data">
-					<!-- 设置隐藏域，防止更新时造成数据丢失 --> 
+					<!-- 设置隐藏域，防止更新时造成数据丢失 -->
 					<input type="hidden" name="id" id="id" value="${appInfo.id}">
-					<input type="hidden" name="devId" id="devId" value="${appInfo.devId}"> 
-					<input type="hidden" name="status" id="status" value="${appInfo.status}"> 
-					<input type="hidden" name="createdBy" id="createdBy" value="${appInfo.createdBy}">
 					<input type="hidden" name="devId" id="devId"
-						value="${appInfo.devId}">
+						value="${appInfo.devId}"> <input type="hidden"
+						name="status" id="status" value="${appInfo.status}"> <input
+						type="hidden" name="createdBy" id="createdBy"
+						value="${appInfo.createdBy}"> <input type="hidden"
+						name="devId" id="devId" value="${appInfo.devId}">
 					<div class="item form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12"
 							for="name">软件名称 <span class="required">*</span>

@@ -20,10 +20,12 @@ public class DevServiceImpl implements DevService {
 
 	@Override
 	public Dev_user seleteUserName(String devCode, String pwd) {
-		Dev_user user = new Dev_user();
+		Dev_user user = null;
 		user = devdao.seleteUserName(devCode);
-		if (!(user.getDevPassword().equals(pwd))) {
-			user = null;
+		if (user != null) {
+			if (!(user.getDevPassword().equals(pwd))) {
+				user = null;
+			}
 		}
 		return user;
 	}
